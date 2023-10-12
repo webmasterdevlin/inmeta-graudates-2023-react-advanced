@@ -4,13 +4,14 @@ import Button from '../components/Button';
 import TitleBar from '../components/TitleBar';
 import UpdateUiLabel from '../components/UpdateUiLabel';
 import useFetchHeroes from '../features/heroes/hooks/useFetchHeroes';
+import useRemoveHero from '../features/heroes/hooks/useRemoveHero';
 import { keys } from '../features/keyNames';
 import type { HeroModel } from '../features/heroes/hero';
 
 export default function HeroesPage() {
   const queryClient = useQueryClient(); // holds the cache which your server data is located
   const { data: response, status } = useFetchHeroes();
-
+  const { mutate: removeHero } = useRemoveHero();
   /* local state */
   const [tracker, setTracker] = useState('0');
 
@@ -60,7 +61,7 @@ export default function HeroesPage() {
                 <Button
                   color="secondary"
                   onClick={() => {
-                    console.log('delete in db');
+                    removeHero(h.id);
                   }}
                 >
                   DELETE in DB
