@@ -4,6 +4,8 @@ import Button from '../components/Button';
 import TitleBar from '../components/TitleBar';
 import UpdateUiLabel from '../components/UpdateUiLabel';
 import useFetchHeroes from '../features/heroes/hooks/useFetchHeroes';
+import { keys } from '../features/keyNames';
+import type { HeroModel } from '../features/heroes/hero';
 
 export default function HeroesPage() {
   const queryClient = useQueryClient(); // holds the cache which your server data is located
@@ -11,6 +13,17 @@ export default function HeroesPage() {
 
   /* local state */
   const [tracker, setTracker] = useState('0');
+
+  const handleSoftDelete = (id: string) => {
+    // no HTTP DELETE Request here. Only mutating the server data state
+    queryClient.setQueryData<{ data: HeroModel[] }>([keys.heroes], prevData => {
+      return {
+        data: prevData?.data?.filter(h => {
+          return h.id !== id;
+        }) as HeroModel[],
+      };
+    });
+  };
 
   if (status === 'error') return <p>Error 😢</p>;
 
@@ -36,6 +49,21 @@ export default function HeroesPage() {
                   }}
                 >
                   Mark
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleSoftDelete(h.id);
+                  }}
+                >
+                  Remove
+                </Button>
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    console.log('delete in db');
+                  }}
+                >
+                  DELETE in DB
                 </Button>
               </div>
             </div>
