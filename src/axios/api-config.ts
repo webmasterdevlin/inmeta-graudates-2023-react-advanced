@@ -4,7 +4,9 @@ export const api = axios.create({
   baseURL: '/api/',
 });
 
-export const EndPoints = {} as const;
+export const EndPoints = {
+  heroes: 'heroes',
+} as const;
 
 // create a type out of the object
 type EndPointType = typeof EndPoints;
