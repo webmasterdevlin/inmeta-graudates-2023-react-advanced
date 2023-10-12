@@ -35,6 +35,10 @@ export default function useRemoveHero() {
           return { backup };
         }
       },
+      // alaways refetch after error or success
+      onSettled: () => {
+        return queryClient.invalidateQueries([keys.heroes]);
+      },
     },
   );
 }
