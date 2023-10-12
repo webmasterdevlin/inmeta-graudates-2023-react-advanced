@@ -27,13 +27,24 @@ const TablePage = Loadable(
   }),
 );
 
+const HeroesPage = Loadable(
+  lazy(() => {
+    return import('./pages/HeroesPage');
+  }),
+);
+
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 export const pathNames = {
   home: '/',
   table: '/table',
+  heroes: '/heroes',
 } as const;
 
 const lazyRoutes: RouteObject[] = [
+  {
+    element: <HeroesPage />,
+    path: pathNames.heroes,
+  },
   {
     element: <HomePage />,
     path: pathNames.home,
