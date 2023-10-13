@@ -10,11 +10,14 @@ export default defineConfig({
   plugins: [react(), eslint(), viteTsconfigPaths()],
   test: {
     include: ['src/**/*.{test,spec}.{js,ts,tsx}'],
-    exclude: ['src/tests'],
+    exclude: ['src/e2e'],
     globals: true,
     environment: 'jsdom',
     setupFiles: 'src/setupTests.ts',
     reporters: 'verbose',
+    coverage: {
+      provider: 'istanbul',
+    },
   },
   server: {
     host: '0.0.0.0',
