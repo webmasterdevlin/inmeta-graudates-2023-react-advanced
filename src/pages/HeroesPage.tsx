@@ -1,8 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import Button from '../components/Button';
+import FormSubmission from '../components/FormSubmission';
 import TitleBar from '../components/TitleBar';
 import UpdateUiLabel from '../components/UpdateUiLabel';
+import useAddHero from '../features/heroes/hooks/useAddHero';
 import useFetchHeroes from '../features/heroes/hooks/useFetchHeroes';
 import useRemoveHero from '../features/heroes/hooks/useRemoveHero';
 import { keys } from '../features/keyNames';
@@ -12,6 +14,8 @@ export default function HeroesPage() {
   const queryClient = useQueryClient(); // holds the cache which your server data is located
   const { data: response, status } = useFetchHeroes();
   const { mutate: removeHero } = useRemoveHero();
+  const { mutate: addHero } = useAddHero();
+
   /* local state */
   const [tracker, setTracker] = useState('0');
 
@@ -31,6 +35,7 @@ export default function HeroesPage() {
   return (
     <div>
       <TitleBar title="Heroes Page" />
+      <FormSubmission handleMutate={addHero} />
       <UpdateUiLabel />
       {status === 'loading' ? (
         <h2>Loading.. Please wait..</h2>

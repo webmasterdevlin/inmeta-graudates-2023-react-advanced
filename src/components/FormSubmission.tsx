@@ -29,7 +29,7 @@ const FormSubmission = ({ handleMutate }: Props) => {
   };
 
   return (
-    <form onSubmit={handleMutate(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center justify-center">
         <Card>
           <InputBox label="first name" errors={errors} name="firstName" register={register} />
